@@ -24,7 +24,11 @@ namespace Wasly.net
         optionsAction.UseSqlServer(_configuration.GetConnectionString("connectionstring")));
            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<appcontext>();
 
-
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = "891001289007-5ogelub651k467a70lvpqap41oqq8bel.apps.googleusercontent.com";
+                googleOptions.ClientSecret = "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";
+            });
 
             services.AddSession(c =>
             {

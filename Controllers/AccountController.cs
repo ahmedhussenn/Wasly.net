@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using Wasly.net.ViewModels;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
@@ -52,13 +54,18 @@ namespace Wasly.net.Controllers
         public IActionResult Login(String ReturnUrl = "~/Client/Homepage")
         {
             ViewData["RedirectUrl"] = ReturnUrl;
+            ViewBag.ReturnUrl = ReturnUrl;
             return View("Login");
         }
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel loginuser, String ReturnUrl)
         {
 
-
+            if (ReturnUrl == null)
+            {
+                ReturnUrl = "~/Client/Homepage";
+              
+            }
             if (ModelState.IsValid == true)
             {
                 IdentityUser user = await _usermanger.FindByNameAsync(loginuser.username);
@@ -94,7 +101,7 @@ namespace Wasly.net.Controllers
         public async Task<IActionResult> Logout()
         {
             await _SignInManager.SignOutAsync();
-            return View("Login");
+            return RedirectToAction("Login");
         }
 
 
@@ -130,7 +137,78 @@ namespace Wasly.net.Controllers
 
 
 
-    
+        [HttpGet]
+        public IActionResult ExternalLogin(string provider, string returnUrl = null)
+        {
+            // Request a redirect to the external login provider.
+            var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { returnUrl });
+            var properties = _SignInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            return Challenge(properties, provider);
+        }
+
+        [HttpGet]
+        [HttpGet]
+        public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
+        {
+            if (remoteError != null)
+            {
+                // Handle errors from the external provider, if any.
+                // You can redirect to an error page or take appropriate action.
+                return Content("nooo");
+            }
+
+            var info = await _SignInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+
+                return Content("nooo");
+            }
+
+
+            string email = info.Principal.FindFirstValue(ClaimTypes.Email);
+
+            if (string.IsNullOrEmpty(email))
+            {
+
+                return Content("nooo");
+            }
+
+
+            var signInResult = await _SignInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+            if (signInResult.Succeeded)
+            {
+  
+
+                // Get the user's ID from the ClaimsPrincipal
+                IdentityUser userr = await _usermanger.FindByNameAsync(email);
+
+                HttpContext.Session.SetString("Username", userr.Id);
+             
+                return RedirectToAction("HomePage", "Client") ;
+            }
+
+
+
+            var user = new IdentityUser { UserName = email, Email = email };
+            var result = await _usermanger.CreateAsync(user);
+            if (result.Succeeded)
+            {
+                result = await _usermanger.AddLoginAsync(user, info);
+                if (result.Succeeded)
+                {
+                    await _usermanger.AddToRoleAsync(user, "Client");
+                    await _SignInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("HomePage", "Client");
+                }
+            }
+
+ 
+
+
+            ViewData["ReturnUrl"] = returnUrl;
+            return Content("failed");
+        }
+
 
         public IActionResult Index()
         {

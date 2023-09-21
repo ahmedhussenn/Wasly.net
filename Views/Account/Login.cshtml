@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Login";
 }
+@{
+    // Retrieve the returnUrl from ViewBag
+    string returnUrl = ViewBag.ReturnUrl;
+}
 
 <h1>Login</h1>
 
@@ -26,6 +30,11 @@
             <div class="form-group">
                 <input type="submit" value="Login" class="btn btn-primary" />
             </div>
+            <div style= margin-top: 20px;">
+                @Html.ActionLink("Login with Google", "ExternalLogin", "Account", new { provider = "Google", returnUrl }, htmlAttributes: new { @class = "google-login-button" })
+            </div>
+
+
         </form>
     </div>
 </div>
