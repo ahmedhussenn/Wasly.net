@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Order Request</title>
+    <style>
+        /* Basic styling for the navigation bar */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+        }
+
+        /* Style the main content */
+        .content {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div>
+                <h1>Customer Order Request</h1>
+            </div>
+            <div>
+                <a asp-controller="Account" asp-action="MyAccount">My Account</a>
+                <a asp-controller="Client" asp-action="RequestHistory">Request History</a>
+                <a asp-controller="Order" asp-action="Request_Order">Request New One</a>
+
+            </div>
+        </nav>
+    </header>
+    <div class="content">
+        <!-- Your content goes here -->
+        <h2>Welcome to your customer portal</h2>
+        <p>Here you can request new orders and manage your account.</p>
+    </div>
+</body>
+</html>

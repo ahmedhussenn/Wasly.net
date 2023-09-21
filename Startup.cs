@@ -41,6 +41,7 @@ namespace Wasly.net
             // services.AddTransient<IEmpsRepos, StudentRepos>();//each time one will be create
             // services.AddScoped<IEmpsRepos, StudentRepos>();//one created per client request   
             services.AddScoped<OrderRepos>();
+            services.AddScoped<ClientRepos>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

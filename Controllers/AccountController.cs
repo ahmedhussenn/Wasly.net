@@ -49,7 +49,7 @@ namespace Wasly.net.Controllers
         }
 
 
-        public IActionResult Login(String ReturnUrl = "~/home/index")
+        public IActionResult Login(String ReturnUrl = "~/Client/Homepage")
         {
             ViewData["RedirectUrl"] = ReturnUrl;
             return View("Login");

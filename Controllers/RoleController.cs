@@ -13,7 +13,7 @@ namespace Wasly.net.Controllers
         }
         public async Task<IActionResult> index()
         {
-            IdentityRole role = new IdentityRole() { Name ="Client" };
+            IdentityRole role = new IdentityRole() { Name ="Employee" };
             IdentityResult res = await rolemanager.CreateAsync(role);
 
             if (res.Succeeded)
