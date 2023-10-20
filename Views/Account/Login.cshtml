@@ -7,42 +7,187 @@
     // Retrieve the returnUrl from ViewBag
     string returnUrl = ViewBag.ReturnUrl;
 }
+@{
+    Layout = "_LayoutWithoutLogout";
+}
 
-<h1>Login</h1>
+<style media="screen">
+    /* Your provided styles here */
+    *,
+    *:before,
+    *:after {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
 
-<h4>LoginModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Login">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" name="ReturnUrl" value="@ViewData["RedirectUrl"]" />
-            <div class="form-group">
-                <label asp-for="username" class="control-label"></label>
-                <input asp-for="username" class="form-control" />
-                <span asp-validation-for="username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="password" class="control-label"></label>
-                <input asp-for="password" class="form-control" />
-                <span asp-validation-for="password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Login" class="btn btn-primary" />
-            </div>
-            <div style= margin-top: 20px;">
-                @Html.ActionLink("Login with Google", "ExternalLogin", "Account", new { provider = "Google", returnUrl }, htmlAttributes: new { @class = "google-login-button" })
-            </div>
+    body {
+        background-color: #080710;
+    }
+
+    .background {
+        width: 430px;
+        height: 520px;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+    }
+
+        .background .shape {
+            height: 200px;
+            width: 200px;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+    .shape:first-child {
+        background: linear-gradient(#1845ad, #23a2f6);
+        left: -80px;
+        top: -80px;
+    }
+
+    .shape:last-child {
+        background: linear-gradient(to right, #ff512f, #f09819);
+        right: -30px;
+        bottom: -80px;
+    }
+
+    form {
+        height: 520px;
+        width: 400px;
+        background-color: rgba(255, 255, 255, 0.13);
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        border-radius: 10px;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+        padding: 50px 35px;
+    }
+
+        form * {
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            outline: none;
+            border: none;
+        }
+
+        form h3 {
+            font-size: 32px;
+            font-weight: 500;
+            line-height: 42px;
+            text-align: center;
+        }
+
+    label {
+        display: block;
+        margin-top: 30px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    input {
+        display: block;
+        height: 50px;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.07);
+        border-radius: 3px;
+        padding: 0 10px;
+        margin-top: 8px;
+        font-size: 14px;
+        font-weight: 300;
+    }
+
+    ::placeholder {
+        color: #e5e5e5;
+    }
+
+    button {
+        margin-top: 50px;
+        width: 100%;
+        background-color: #ffffff;
+        color: #080710;
+        padding: 15px 0;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .social {
+        margin-top: 30px;
+        display: flex;
+    }
+
+        .social div {
+            background: red;
+            width: 150px;
+            border-radius: 3px;
+            padding: 5px 10px 10px 5px;
+            background-color: rgba(255, 255, 255, 0.27);
+            color: #eaf0fb;
+            text-align: center;
+        }
+
+            .social div:hover {
+                background-color: rgba(255, 255, 255, 0.47);
+            }
+
+        .social .fb {
+            margin-left: 25px;
+        }
+
+        .social i {
+            margin-right: 4px;
+        }
+</style>
 
 
-        </form>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+
+            <form asp-action="Login" class="form-signin">
+                <h1 style="text-align:center;">Login</h1>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" name="ReturnUrl" value="@ViewData["RedirectUrl"]" />
+                <div class="form-group">
+                    <label asp-for="username" class="control-label">Username</label>
+                    <input asp-for="username" class="form-control" />
+                    <span asp-validation-for="username" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="password" class="control-label">Password</label>
+                    <input asp-for="password" class="form-control" type="password" />
+                    <span asp-validation-for="password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </div>
+               
+                <div style=margin-top: 20px;">
+                    <p style="text-align:center;">@Html.ActionLink("Login with Google", "ExternalLogin", "Account", new { provider = "Google", returnUrl }, htmlAttributes: new { @class = "google-login-button" })</p>
+                </div>
+                <br/>
+                <div class="form-group">
+                    <p style="text-align:center;">   <a asp-controller="Account" asp-action="Register"> Sign Up</a></p>
+                </div>
+                <hr />
+            
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

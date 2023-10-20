@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Wasly.context;
 
@@ -11,9 +12,11 @@ using Wasly.context;
 namespace Wasly.net.Migrations
 {
     [DbContext(typeof(appcontext))]
-    partial class appcontextModelSnapshot : ModelSnapshot
+    [Migration("20230923132420_peter")]
+    partial class peter
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -256,9 +259,6 @@ namespace Wasly.net.Migrations
 
                     b.Property<DateTime>("Released_Date")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("isAssigned")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

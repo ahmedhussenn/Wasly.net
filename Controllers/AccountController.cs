@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Wasly.net.Services;
 using Wasly.net.ViewModels;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
@@ -10,13 +11,14 @@ namespace Wasly.net.Controllers
 {
     public class AccountController : Controller
     {
-       
+        AccountRepos _accountrepos;
         UserManager<IdentityUser> _usermanger { get; set; }
         SignInManager<IdentityUser> _SignInManager { get; set; }
-        public AccountController(UserManager<IdentityUser> UserManager, SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<IdentityUser> UserManager, SignInManager<IdentityUser> signInManager, AccountRepos accountrepos)
         {
             _usermanger = UserManager;
             _SignInManager = signInManager;
+            _accountrepos = accountrepos;
         }
 
         public IActionResult Register()
@@ -39,6 +41,7 @@ namespace Wasly.net.Controllers
                     //  await _SignInManager.SignInAsync(user,true);//kam youm
                     await _usermanger.AddToRoleAsync(user, "Client");
                     await _SignInManager.SignInAsync(user, false);//per session
+                    return RedirectToAction("Login","Account");
                 }
                 else
                 {
@@ -75,6 +78,13 @@ namespace Wasly.net.Controllers
                     SignInResult result = await _SignInManager.PasswordSignInAsync(user, loginuser.password, true, false);
                     if (result.Succeeded)
                     {
+                        ViewData["userId"] = user.Id; 
+                        if (_accountrepos.getAccountRole(user.Id))
+                        {
+                            ViewData["userRole"] = "Employee";
+                            HttpContext.Session.SetString("Username", user.Id);
+                            return RedirectToAction("Index", "Employee");
+                        }
                    
                         HttpContext.Session.SetString("Username", user.Id);
      
