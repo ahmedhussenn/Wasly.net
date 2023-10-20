@@ -28,5 +28,6 @@ namespace Wasly.net.Models
         public String Pickup_Address { get; set; }
         [Required]
         public String Destination_Address { get; set; }
+        public bool isAssigned { get; set; }
     }
 }
