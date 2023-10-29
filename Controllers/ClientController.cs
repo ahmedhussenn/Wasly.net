@@ -21,5 +21,11 @@ namespace Wasly.net.Controllers
             
             return View("RequestHistory", clientrepos.Get_Orders_History(HttpContext.Session.GetString("Username")));
         }
+        
+        public IActionResult orderFollowUp(int id)
+        {
+            string ordStats =  clientrepos.orderStatus(id);
+            return View("orderFollowUp", ordStats);
+        }
     }
 }

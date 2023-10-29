@@ -34,9 +34,12 @@
         }
     </style>
 </head>
+@{
+    Layout = "_LayoutOfEmployee";
+}
 <body>
     <h1>Order List</h1>
-
+ 
     @foreach (var order in Model)
     {
         <div class="order-card">

@@ -78,10 +78,12 @@ namespace Wasly.net.Controllers
                     SignInResult result = await _SignInManager.PasswordSignInAsync(user, loginuser.password, true, false);
                     if (result.Succeeded)
                     {
-                        ViewData["userId"] = user.Id; 
+                        
                         if (_accountrepos.getAccountRole(user.Id))
                         {
-                            ViewData["userRole"] = "Employee";
+                            // Set userRole in TempData
+                            TempData["userRole"] = "Employee";
+
                             HttpContext.Session.SetString("Username", user.Id);
                             return RedirectToAction("Index", "Employee");
                         }
@@ -110,6 +112,7 @@ namespace Wasly.net.Controllers
 
         public async Task<IActionResult> Logout()
         {
+            TempData["userRole"] = null;
             await _SignInManager.SignOutAsync();
             return RedirectToAction("Login");
         }
