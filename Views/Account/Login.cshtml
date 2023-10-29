@@ -8,9 +8,8 @@
     string returnUrl = ViewBag.ReturnUrl;
 }
 @{
-    Layout = "_LayoutWithoutLogout";
+    Layout = "_LayoutUnderTesting";
 }
-
 <style media="screen">
     /* Your provided styles here */
     *,
@@ -54,13 +53,13 @@
     }
 
     form {
-        height: 520px;
-        width: 400px;
-        background-color: rgba(255, 255, 255, 0.13);
+        height: 60%;
+        width: 22%;
         position: absolute;
+        background-color: rgba(255, 255, 255, 0);
         transform: translate(-50%, -50%);
         top: 50%;
-        left: 50%;
+        left: 70%;
         border-radius: 10px;
         backdrop-filter: blur(10px);
         border: 2px solid rgba(255, 255, 255, 0.1);
@@ -144,14 +143,82 @@
         .social i {
             margin-right: 4px;
         }
+
+    :root {
+        --dark-color: #EFECE7;
+        --gary: #8C7040;
+        --section: #EFECE7;
+    }
+
+    body {
+        font-family: "Roboto",;
+        background-color: #1B3252;
+    }
+
+    .main-btn {
+        color: #EFECE7;
+        background-color: #8C7040;
+        border-color: #8C7040;
+        padding: 0.5rem 1rem;
+    }
+
+    .main-title::after {
+        content: '';
+        width: 120px;
+        height: 2px;
+        position: absolute;
+        bottom: -20px;
+        left: 50%;
+        transform: translatex(-50%);
+    }
+    /*start navbar*/
+    .navbar {
+        background-color: #1B3252;
+    }
+
+        .navbar .navbar-nav .nav-link {
+            color: #EFECE7;
+        }
+
+            .navbar .navbar-nav .nav-link.active,
+            .navbar .navbar-nav .nav-link:focus,
+            .navbar .navbar-nav .nav-link:hover {
+                font-size: large;
+                color: var(--gary);
+            }
+
+    .navbar-toggler {
+        color: #8C7040;
+        font-size: 2rem;
+    }
+
+    /*end navbar*/
+    /*start landing*/
+    .landing {
+        background-color: #1B3252;
+        min-height: calc(110vh - 72px);
+        background-image: url("/images/unsplash_GvsWwiMKLRY-2.png");
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+        background-blend-mode: normal;
+        background-size: cover;
+    }
+    /*end landing*/
+
+    /*start features*/
+
 </style>
 
-
-
-<div class="container">
+<div class="container-fluid landing">
     <div class="row">
-        <div class="col-md-4 offset-md-4">
-
+        <div class="col-md-6">
+            <img style="margin-top:18%;" src="/images/Frame-2.png" alt="Frame Image" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-8 offset-md-2"> <!-- Centered form within this column -->
+            
+            <!-- Centered form column -->
             <form asp-action="Login" class="form-signin">
                 <h1 style="text-align:center;">Login</h1>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -166,10 +233,16 @@
                     <input asp-for="password" class="form-control" type="password" />
                     <span asp-validation-for="password" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                <div class="form-group text-center">
+                    <button style="text-align:center; width:50%;" type="submit" class="btn btn-primary btn-block">Login</button>
                 </div>
-               
+                
+                <br />
+                        <div class="form-group">
+                            <div class="custom-image">
+                                <img style="width:100%" src="/images/Or.png" alt="Custom Image">
+                            </div>
+                        </div>
                 <div style=margin-top: 20px;">
                     <p style="text-align:center;">@Html.ActionLink("Login with Google", "ExternalLogin", "Account", new { provider = "Google", returnUrl }, htmlAttributes: new { @class = "google-login-button" })</p>
                 </div>
@@ -180,8 +253,11 @@
                 <hr />
             
             </form>
+                </div>
+            </div>
         </div>
-    </div>
+        </div>
+    
 </div>
 
 

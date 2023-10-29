@@ -15,5 +15,17 @@ namespace Wasly.net.Services
         {
          return context.Orders.Where(s=>s.ClientId==username).ToList();
         }
+        public string orderStatus(int id)
+        {
+            Order ord = context.Orders.FirstOrDefault(s=>s.Id==id);
+
+            if (ord != null)
+            {
+                return ord.Status;
+
+            }
+            return null;
+        }
+
     }
 }

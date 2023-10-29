@@ -12,6 +12,8 @@ namespace Wasly.net.Controllers
         }
         public IActionResult Index()
         {
+            // Retrieve userRole from TempData
+            var userRole = TempData["userRole"] as string;
             return View("Index",employeerepos.getAllOrders());
         }
         public IActionResult addOrderToEmployee(int id)
@@ -22,7 +24,15 @@ namespace Wasly.net.Controllers
         }
         public IActionResult showOrders()
         {
-            return View("showOrders" , employeerepos.getAllOrders());
+            string empId = HttpContext.Session.GetString("Username");
+            return View("showOrders" , employeerepos.getAllOrdersOfEmployee(empId));
+        }
+        
+        public IActionResult deliverTheOrder(int id)
+        {
+            string empId = HttpContext.Session.GetString("Username");
+            employeerepos.deliverOrder(id, empId);
+            return View("Index", employeerepos.getAllOrders());
         }
     }
 }

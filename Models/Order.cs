@@ -29,5 +29,6 @@ namespace Wasly.net.Models
         [Required]
         public String Destination_Address { get; set; }
         public bool isAssigned { get; set; }
+        public string Status { get; set; }
     }
 }

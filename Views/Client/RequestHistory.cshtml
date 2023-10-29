@@ -16,6 +16,7 @@
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative; /* Add this to make it the positioning context */
         }
 
             .order-card h2 {
@@ -25,6 +26,12 @@
         .order-attribute {
             margin: 5px 0;
         }
+
+        .pick-up-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -33,20 +40,21 @@
     @foreach (var order in Model)
     {
         <div class="order-card">
-            <a onclick="confirmDelete(@order.Id)" class="delete-button btn btn-outline-danger">
-                <i class="bi bi-trash-fill mt"></i>
+            @if (order.Status == null)
+            {
+                <a onclick="confirmDelete(@order.Id)" class="delete-button btn btn-outline-danger">
+                    <i class="bi bi-trash-fill mt"></i>
+                </a>
+                <a asp-controller="Order" asp-action="Edit_Order" asp-route-id="@order.Id" class="edit-button btn btn-outline-danger">
+                    <i class="bi bi-pencil-square mt"></i>
             </a>
-            <a asp-controller="Order" asp-action="Edit_Order" asp-route-id="@order.Id" class="edit-button btn btn-outline-danger">
-                <i class="bi bi-pencil-square mt"></i>
-            </a>
+            }
             <div class="order-attribute">
                 <strong>Name:</strong> @order.Name
             </div>
             <div class="order-attribute">
                 <strong>Description:</strong> @order.Description
             </div>
-         
-           
             <div class="order-attribute">
                 <strong>Released Date:</strong> @order.Released_Date.ToString("yyyy-MM-dd")
             </div>
@@ -58,6 +66,9 @@
             </div>
             <div class="order-attribute">
                 <strong>Destination Address:</strong> @order.Destination_Address
+            </div>
+            <div class="order-attribute">
+                <a class="pick-up-button btn btn-primary" asp-route-id="@order.Id" asp-action="orderFollowUp" asp-controller="Client">Follow Up</a>
             </div>
         </div>
     }
@@ -71,6 +82,5 @@
             // If the user confirms, navigate to the Delete action
             window.location.href = "/Order/Delete_Order/" + orderId;
         }
-
     }
 </script>
