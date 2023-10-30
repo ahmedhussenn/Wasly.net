@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using Wasly.context;
+using Wasly.net.Models;
 using Wasly.net.Services;
 
 namespace Wasly.net
@@ -48,6 +49,7 @@ namespace Wasly.net
             services.AddScoped<ClientRepos>();
             services.AddScoped<EmployeeRepos>();
             services.AddScoped<AccountRepos>();
+            services.AddScoped<AdminRepos>();
 
 
         }
@@ -76,11 +78,12 @@ namespace Wasly.net
 
 
             app.UseEndpoints(endpoints =>
-            {
+            {                
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            
 
             /*
                         app.Use(async (context, next) =>

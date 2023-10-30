@@ -5,7 +5,7 @@ using Wasly.net.Models;
 namespace Wasly.context
 {
     //class appuser : idenityuser{}
-    public class appcontext : IdentityDbContext//<appuser>
+    public class appcontext : IdentityDbContext
     {
         public appcontext()
         {
@@ -17,7 +17,7 @@ namespace Wasly.context
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source =DESKTOP-665C9QB\\SQLEXPRESS; Initial Catalog = Wasly; Integrated Security = true; TrustServerCertificate = true");
+            optionsBuilder.UseSqlServer("Data Source =DESKTOP-J7ATT94\\SQLEXPRESS; Initial Catalog = Wasly; Integrated Security = true; TrustServerCertificate = true");
         }
         public DbSet<Order>Orders { get; set; } 
 

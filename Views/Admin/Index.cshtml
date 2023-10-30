@@ -1,0 +1,57 @@
+﻿@model Wasly.net.ViewModels.UserName_And_Role
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <style>
+        /* Basic styling for the navigation bar */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            nav a {
+                color: #fff;
+                text-decoration: none;
+                padding: 10px 20px;
+            }
+
+        /* Style the main content */
+        .content {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div>
+                <h1>Admin page</h1>
+            </div>
+        </nav>
+    </header>
+    <div class="content">
+        
+        <h2>Welcome to admin page</h2>
+        
+        
+            <p>@Model.username      @Model.Role </p>
+        
+    </div>
+</body>
+</html>

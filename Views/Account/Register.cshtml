@@ -138,6 +138,7 @@
         .social i {
             margin-right: 4px;
         }
+
 </style>
 
 <div class="container">
@@ -164,11 +165,43 @@
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block">Create</button>
                 </div>
+ @*               <br>
+                <div class="form-group">
+                    <p style="text-align:center;">
+                        <label for="employeeRequest" style="display: inline-block; vertical-align: middle;">
+                            Request to be an employee
+                        </label>
+                       <!-- Hidden input for IsEmployeeRequest -->
+                       
+
+
+
+                        <input type="checkbox" id="employeeRequest" name="employeeRequest" value="@Model.IsEmployeeRequest" style="transform: scale(0.4); vertical-align: middle;" onchange="updateIsEmployeeRequest" />
+
+
+<script>
+
+                            function updateIsEmployeeRequest(checkbox) {
+                                var hiddenInput = document.getElementById('employeeRequest'); 
+                                if (hiddenInput) {
+                                    hiddenInput.value = checkbox.checked ? '1' : '0';
+                                }
+                            }
+
+</script>
+
+                    </p>
+                </div>*@
+                
+
+
+
                 <br />
                 <div class="form-group">
-                    <p style="text-align:center;"> Do you have an account?   <a asp-controller="Account" asp-action="Login"> Sign In</a></p>
+                    <p style="text-align:center;">Do you have an account? <a asp-controller="Account" asp-action="Login">Sign In</a></p>
                 </div>
             </form>
+
         </div>
     </div>
 </div>
