@@ -17,7 +17,9 @@ namespace Wasly.net.ViewModels
         [DataType(DataType.Password)]
         public string confirmpassword { get; set; }
 
- 
+
+        
+
 
     }
 }

@@ -17,9 +17,22 @@ namespace Wasly.net.Services
             { 
             return true;
             }
+        
             return false;
            
         }
+        public bool getAdminRole(string id)
+        {
+            var role = context.UserRoles.FirstOrDefault(x => x.UserId == id);
+            if (role.RoleId == "Admin_id")
+            {
+                return true;
+            }
+            return false;
 
-    }
+        }
+
+
+
+        }
 }

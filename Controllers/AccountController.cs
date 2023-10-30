@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Wasly.net.Models;
 using Wasly.net.Services;
 using Wasly.net.ViewModels;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
@@ -86,6 +87,11 @@ namespace Wasly.net.Controllers
 
                             HttpContext.Session.SetString("Username", user.Id);
                             return RedirectToAction("Index", "Employee");
+                        }
+                        if (_accountrepos.getAdminRole(user.Id))
+                        {
+                            HttpContext.Session.SetString("Username", user.Id);
+                            return RedirectToAction("Index", "Admin");
                         }
                    
                         HttpContext.Session.SetString("Username", user.Id);
@@ -190,7 +196,7 @@ namespace Wasly.net.Controllers
             var signInResult = await _SignInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
             if (signInResult.Succeeded)
             {
-  
+
 
                 // Get the user's ID from the ClaimsPrincipal
                 IdentityUser userr = await _usermanger.FindByNameAsync(email);
