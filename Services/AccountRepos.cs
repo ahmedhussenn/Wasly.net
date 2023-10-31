@@ -21,6 +21,7 @@ namespace Wasly.net.Services
             return false;
            
         }
+        //admin
         public bool getAdminRole(string id)
         {
             var role = context.UserRoles.FirstOrDefault(x => x.UserId == id);
