@@ -1,0 +1,1 @@
+a package delivery web application built using .NET 6. The platform enables users to request and manage package deliveries to specified destinations. Implemented core features including authentication, authorization, and account management to ensure secure user access and functionality
