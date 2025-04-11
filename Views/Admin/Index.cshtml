@@ -1,5 +1,9 @@
 ﻿@model Wasly.net.ViewModels.UserName_And_Role
+@{
+    Layout = "_LayoutOfAdmin";
+}
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -35,7 +39,27 @@
         .content {
             padding: 20px;
         }
+
+        /* Card-style */
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            position: relative;
+        }
+
+        .button-container {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+
+    
     </style>
+
+  
 </head>
 <body>
     <header>
@@ -46,12 +70,34 @@
         </nav>
     </header>
     <div class="content">
-        
         <h2>Welcome to admin page</h2>
-        
-        
-            <p>@Model.username      @Model.Role </p>
-        
+
+        <div class="search-container">
+            <a class="btn btn-success" id="searchButton">Search</a>
+            <input placeholder="Enter Username" id="searchInput" />
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        @if (Model.username != null && Model.Role != null)
+        {
+            <div class="card">
+                <p><strong>Username:</strong> @Model.username</p>
+                <p><strong>Role:</strong> @Model.Role</p>
+                <div class="button-container">
+                    <a class="btn btn-success" asp-action="deleteAcc" asp-controller="Admin" asp-route-id=@Model.userId>Delete</a>
+                </div>
+            </div>
+        }
     </div>
 </body>
 </html>
+<script>
+    document.getElementById("searchButton").addEventListener("click", function () {
+        var searchInput = document.getElementById("searchInput").value;
+        if (searchInput) {
+            window.location.href = '@Url.Action("SearchForAccount", "Admin")?Name=' + encodeURIComponent(searchInput);
+        }
+    });
+</script>

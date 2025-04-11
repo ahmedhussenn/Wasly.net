@@ -12,29 +12,35 @@ namespace Wasly.net.Services
         {
             context = _cont;
         }
-        public UserName_And_Role Getusers(string Name)
+        public UserName_And_Role GetuserRole(string Name)
         {
-
+            string normalizedQuery = Name?.Replace(" ", "").ToLower();
             var query = (from userRole in context.UserRoles
                          join user in context.Users on userRole.UserId equals user.Id
                          join role in context.Roles on userRole.RoleId equals role.Id
-                         where user.UserName == Name
+                         where user.UserName.ToLower() == normalizedQuery
                          select new
                          {
                              Role = role.Name, 
                              username = user.UserName,
+                             userId = user.Id
                          }).FirstOrDefault();
 
-            if (query != null)
+            if (query != null &&query.Role!=null)
             {
-                UserName_And_Role u = new UserName_And_Role() { username = query.username, Role = query.Role };
+                UserName_And_Role u = new UserName_And_Role() { userId = query.userId,username = query.username, Role = query.Role };
                 return u;
             }
-            return null;
+            return new UserName_And_Role();
         }
-        
+        public void deleteAccount(string id)
+        {
+            context.Users.Remove(context.Users.FirstOrDefault(u => u.Id == id));
+            context.SaveChanges();
+        }
 
-        }
+
+    }
      
     }
 

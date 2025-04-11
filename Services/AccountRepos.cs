@@ -10,7 +10,7 @@ namespace Wasly.net.Services
         {
             context = _cont;
         }
-        public bool getAccountRole(string id)
+        public bool getEmployeeRole(string id)
         {
             var role = context.UserRoles.FirstOrDefault(x => x.UserId == id);
             if (role.RoleId == "Employee_id")

@@ -85,7 +85,7 @@ namespace Wasly.net.Controllers
                     if (result.Succeeded)
                     {
                         
-                        if (_accountrepos.getAccountRole(user.Id))
+                        if (_accountrepos.getEmployeeRole(user.Id))
                         {
                             // Set userRole in TempData
                             TempData["userRole"] = "Employee";
