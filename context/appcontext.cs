@@ -17,7 +17,7 @@ namespace Wasly.context
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source =DESKTOP-J7ATT94\\SQLEXPRESS; Initial Catalog = Wasly; Integrated Security = true; TrustServerCertificate = true");
+            optionsBuilder.UseSqlServer("Data Source =GEORGE\\SQLEXPRESS; Initial Catalog = Wasly; Integrated Security = true; TrustServerCertificate = true");
         }
         public DbSet<Order>Orders { get; set; } 
 

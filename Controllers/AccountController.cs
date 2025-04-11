@@ -15,11 +15,13 @@ namespace Wasly.net.Controllers
         AccountRepos _accountrepos;
         UserManager<IdentityUser> _usermanger { get; set; }
         SignInManager<IdentityUser> _SignInManager { get; set; }
-        public AccountController(UserManager<IdentityUser> UserManager, SignInManager<IdentityUser> signInManager, AccountRepos accountrepos)
+        RoleManager<IdentityRole> _roleManager { get; set; }
+        public AccountController(UserManager<IdentityUser> UserManager, SignInManager<IdentityUser> signInManager, AccountRepos accountrepos, RoleManager<IdentityRole> roleManager)
         {
             _usermanger = UserManager;
             _SignInManager = signInManager;
             _accountrepos = accountrepos;
+            _roleManager = roleManager;
         }
 
         public IActionResult Register()
@@ -38,7 +40,10 @@ namespace Wasly.net.Controllers
                 IdentityResult res = await _usermanger.CreateAsync(user, newaccount.password);
                 if (res.Succeeded)
                 {
-                 
+                    if (!(_roleManager.Roles.FirstOrDefault(r => r.Name == "Client").ToString() == "Client"))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole("Client"));
+                    }
                     //  await _SignInManager.SignInAsync(user,true);//kam youm
                     await _usermanger.AddToRoleAsync(user, "Client");
                     await _SignInManager.SignInAsync(user, false);//per session
@@ -215,6 +220,10 @@ namespace Wasly.net.Controllers
                 result = await _usermanger.AddLoginAsync(user, info);
                 if (result.Succeeded)
                 {
+                    if(!(_roleManager.Roles.FirstOrDefault(r=>r.Name== "Client").ToString()=="Client"))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole("Client"));
+                    }
                     await _usermanger.AddToRoleAsync(user, "Client");
                     await _SignInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("HomePage", "Client");
